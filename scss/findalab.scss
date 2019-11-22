@@ -494,6 +494,13 @@ $findlab-radio-button-checked-border: 2px solid #ed9013 !default;
   }
 }
 
+/** Map marker description title **/
+.gm-style-iw-d {
+  h6 {
+    max-width: fit-content;
+  }
+}
+
 @keyframes fadeInOpacity {
   0% {
     opacity: 0;
@@ -503,3 +510,4 @@ $findlab-radio-button-checked-border: 2px solid #ed9013 !default;
     opacity: 1;
   }
 }
+
