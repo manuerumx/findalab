@@ -8,6 +8,7 @@ use Behat\FlexibleMink\Context\FlexibleContext;
 use Behat\FlexibleMink\Context\ScreenShotContext;
 use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Mink\Element\NodeElement;
+use Behat\Mink\Element\TraversableElement;
 use Behat\Mink\Exception\DriverException;
 use Behat\Mink\Exception\ExpectationException;
 use Behat\Mink\Exception\UnsupportedDriverActionException;
@@ -52,6 +53,16 @@ class WebContext extends FlexibleContext implements GathersContexts
     }
 
     /**
+     * Initializes the session.
+     */
+    public function initSession()
+    {
+        if (!$this->getSession()->isStarted()) {
+            $this->getSession()->start();
+        }
+    }
+
+    /**
      * Initializes the window size.
      *
      * @throws DriverException
@@ -60,6 +71,7 @@ class WebContext extends FlexibleContext implements GathersContexts
      */
     public function initWindowSize()
     {
+        $this->initSession();
         $this->fullScreenWindow();
     }
 
@@ -250,6 +262,34 @@ JS
         $this->getSession()->getDriver()->executeScript('window.navigator.geolocation.getCurrentPosition=' .
             "function(success){var position = {\"coords\" : {\"latitude\": $x,\"longitude\": $y}};" .
             'success(position);}');
+    }
+
+    /**
+     * This function overrides the original method in FlexibleMink.
+     *
+     * The functions excludes code which seems to have a bug with the viewport size
+     * and the way on how attempt to detect if an element is or not in viewport
+     *
+     * This method, should be removed when the project is updated to use FlexibleMink 2
+     *
+     * @ToDo Remove this function after FlexibleMink 2 is updated.
+     *
+     * {@inheritdoc}
+     */
+    public function pressButton($locator, TraversableElement $context = null)
+    {
+        /** @var NodeElement $button */
+        $button = $this->waitFor(function () use ($locator, $context) {
+            return $this->scrollToButton($locator, $context);
+        });
+
+        $this->waitFor(function () use ($button, $locator) {
+            if ($button->getAttribute('disabled') === 'disabled') {
+                throw new ExpectationException("Unable to press disabled button '$locator'.", $this->getSession());
+            }
+        });
+
+        $button->press();
     }
 
     /**

@@ -5,9 +5,9 @@
   "license": "private",
   "type": "project",
     "require": {
-      "php": ">=5.5.9",
+      "php": "^7.0",
       "laravel/lumen-framework": "5.2.*",
-      "vlucas/phpdotenv": "~2.2"
+      "vlucas/phpdotenv": "^2.3"
   },
   "require-dev": {
     "behat/behat": "dev-v3.4.3-with-patches as 3.4.3",
@@ -16,8 +16,7 @@
     "fzaninotto/faker": "~1.4",
     "jarnaiz/behat-junit-formatter": "^1.3",
     "medology/flexible-mink": "1.0.x-dev as dev-master",
-    "phpunit/phpunit": "~4.0",
-    "vlucas/phpdotenv": "^2.3"
+    "phpunit/phpunit": "~4.0"
   },
   "autoload": {
     "psr-4": {
@@ -38,6 +37,10 @@
     {
       "type": "vcs",
       "url": "https://github.com/Chekote/MinkSelenium2Driver"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/Chekote/Behat"
     }
   ]
 }
