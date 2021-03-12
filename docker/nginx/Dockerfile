@@ -1,4 +1,4 @@
-FROM nginx:1.11.3
+FROM nginx:1.19.8
 
 RUN mkdir /etc/nginx/ssl \
     && openssl genrsa -des3 -passout pass:x -out server.pass.key 2048\
